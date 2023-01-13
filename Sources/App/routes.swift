@@ -8,4 +8,12 @@ func routes(_ app: Application) throws {
     app.get("hello") { req async -> String in
         "Hello, world!"
     }
+
+    app.get("hello", ":name") { req async throws -> String in
+        guard let name = req.parameters.get("name") else {
+            throw Abort(.internalServerError)
+        }
+        return "Hello \(name)"
+    }
 }
+
